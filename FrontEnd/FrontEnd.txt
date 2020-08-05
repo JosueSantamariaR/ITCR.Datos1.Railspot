@@ -1,1 +1,0 @@
-In this section can find the React project
