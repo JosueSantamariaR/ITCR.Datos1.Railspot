@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_pymongo import PyMongo, ObjectId
+
 app= Flask(__name__)
 app.config['MONGO_URI']='mongodb://localhost/pythonreactdb'
 
