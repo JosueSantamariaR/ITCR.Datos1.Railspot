@@ -3,10 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { GraphComponent } from './graph/graph.component';
+import { TicketsComponent } from './tickets/tickets.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   { path:'', component: HomeComponent },
-  { path:'graph', component: GraphComponent }
+  { path:'graph', component: GraphComponent },
+  { path:'tickets', component: TicketsComponent },
+  { path:'admin', component: AdminComponent }
 ];
 
 @NgModule({

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as dracula from 'graphdracula';
+import { interval } from 'rxjs';
+import {Conexions} from '../graph/lista';
 
 @Component({
   selector: 'app-graph',
@@ -15,33 +17,33 @@ export class GraphComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
+	const x= new Conexions();
+	
+	const list=x.getList();
+	const size=x.getSize();
     const Graph = dracula.Graph;
     const Renderer = dracula.Renderer.Raphael;
     const Layout = dracula.Layout.Spring;
+    
 
     this.graph = new Graph();
 
     this.graph.addNode('San José');
     this.graph.addNode('Cartago');
-    this.graph.addNode('Heredia');
-    this.graph.addNode('Alajuela');
-    this.graph.addNode('Puntarenas');
-    this.graph.addNode('Guanacaste'); 
-    
-    this.addEdge('Heredia', 'Cartago', 38);
-    this.addEdge('Heredia', 'Guanacaste', 207);
-    this.addEdge('Heredia', 'San José', 11);
-    this.addEdge('Cartago', 'San José', 25);
-    this.addEdge('Cartago', 'Guanacaste', 235);
-    this.addEdge('Cartago', 'Alajuela', 47);
-    this.addEdge('Alajuela', 'Guanacaste', 198);
-    this.addEdge('San José', 'Guanacaste', 209);
-    this.addEdge('Puntarenas', 'Guanacaste', 133);
-    this.addEdge('Puntarenas', 'Alajuela', 86);
-    this.addEdge('Puntarenas', 'Heredia', 96);
-    this.addEdge('San José', 'Alajuela', 19);
-    this.addEdge('Alajuela', 'Heredia', 13);
+    this.graph.addNode('Paraíso');
+    this.graph.addNode('Tres Ríos');
+	this.graph.addNode('Curridabat'); 
+	this.graph.addNode('Sabanilla');
+	this.graph.addNode('Zapote');
+	this.graph.addNode('San Pedro');
+	this.graph.addNode('Guadalupe');
+	this.graph.addNode('Tibás');
+	this.graph.addNode('Moravia');
+	this.graph.addNode('Santo Domingo');
+	this.graph.addNode('Heredia');
+    for (let i=0;i<size;i++){
+    this.addEdge(list[i][0],list[i][1],list[i][2]);
+    }
 
     this.renderer = new Renderer('#paper', this.graph, 1200, 600);
     this.layout = new Layout(this.graph);
