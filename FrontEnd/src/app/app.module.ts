@@ -7,6 +7,8 @@ import { HomeComponent } from './home/home.component';
 import { GraphComponent } from './graph/graph.component';
 import { AdminComponent } from './admin/admin.component';
 import { TicketsComponent } from './tickets/tickets.component';
+import { ApiComponent } from './api/api.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,11 +16,13 @@ import { TicketsComponent } from './tickets/tickets.component';
     HomeComponent,
     GraphComponent,
     AdminComponent,
-    TicketsComponent
+    TicketsComponent,
+    ApiComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
