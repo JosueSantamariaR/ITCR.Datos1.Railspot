@@ -57,6 +57,55 @@ def getUser(id):
         'password':user['password']
         })
 
+"""
+
+@app.route('/allGraph')
+def allGraph():
+
+    edges = Graph.graph.edges
+
+    newList = []
+
+    for i in range(0, len(edges)):
+
+        current = [edges[i].start,edges[i].end,edges[i].cost]
+
+        newList.append(current)
+
+    return jsonify(newList)
+
+
+@app.route('/dijkstra')
+def dijkstra():
+
+    start = request.args.get('start')
+    end = request.args.get('end')
+
+    dijkstraList = Graph.graph.dijkstra(start,end)
+
+    return jsonify(dijkstraList)
+
+@app.route('/addEdge')
+def addEdge():
+
+    start = request.args.get('start')
+    end = request.args.get('end')
+
+    Graph.graph.add_edge(start,end)
+
+    return None
+
+@app.route('/removeEdge')
+def removeEdge():
+
+    start = request.args.get('start')
+    end = request.args.get('end')
+
+    Graph.graph.remove_edge(start,end)
+
+    return None
+
+"""
 
 if __name__ == "__main__":
     app.run(debug=True)

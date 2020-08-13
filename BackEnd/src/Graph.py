@@ -1,179 +1,138 @@
-class Node:
+from collections import deque, namedtuple
 
-    def __init__(self, data, index = None):
+inf = float('inf')
+Edge = namedtuple('Edge', 'start, end, cost')
 
-        self.data = data
-        self.index = index
-        
-        
+def make_edge(start, end, cost):
+    return Edge(start, end, cost)
+
 class Graph:
 
-    @classmethod
-    def createFromNodes(self, nodes):
+    def __init__(self, edges):
+        
+        wrong_edges = [i for i in edges if len(i) not in [2, 3]]
 
-        return Graph(len(nodes), len(nodes), nodes)
+        if wrong_edges:
 
-    def __init__(self, row, col, nodes = None):
+            raise ValueError('Wrong edges data: {}'.format(wrong_edges))
 
-        self.adjacencyMatrix = [[0] * col for _ in range(row)]
-        self.nodes = nodes
+        self.edges = [make_edge(*edge) for edge in edges]
 
-        for i in range(len(self.nodes)):
+    @property
+    def vertices(self):
 
-            self.nodes[i].index = i
+        return set(
+            sum(
+                ([edge.start, edge.end] for edge in self.edges), []
+            )
+        )
 
-    def connectDir(self, node1, node2, weight):
+    def get_node_pairs(self, n1, n2, both_ends = True):
 
-        node1 = self.getIndexFromNode(node1)
-        node2 = self.getIndexFromNode(node2)
-        self.adjacencyMatrix[node1][node2] = weight
+        if both_ends:
 
-    def connect(self, node1, node2, weight):
-
-        self.connectDir(node1, node2, weight)
-        self.connectDir(node2, node1, weight)
-
-    def connectionsFrom(self, node):
-
-        node = self.getIndexFromNode(node)
-
-        return [(self.nodes[colNum], self.adjacencyMatrix[node][colNum]) for colNum in range(len(self.adjacencyMatrix[node])) if self.adjacencyMatrix[node][colNum] != 0]
-
-    def connectionsTo(self, node):
-
-        node = self.getIndexFromNode(node)
-        column = [row[node] for row in self.adjacencyMatrix]
-
-        return [(self.nodes[rowNum], column[rowNum]) for rowNum in range(len(column)) if column[rowNum] != 0]
-
-    def printAdjencyMatrix(self):
-
-        for row in self.adjacencyMatrix:
-
-            print(row)
-
-    def node(self, index):
-
-        return self.nodes[index]
-    
-    def removeConn(self, node1, node2):
-
-        self.removeConnDir(node1, node2)
-        self.removeConnDir(node2, node1)
-
-    def removeConnDir(self, node1, node2):
-
-        node1, node2 = self.getIndexFromNode(node1), self.getIndexFromNode(node2)
-        self.adjacencyMatrix[node1][node2] = 0   
-
-    def canTraverseDir(self, node1, node2):
-
-        node1, node2 = self.getIndexFromNode(node1), self.getIndexFromNode(node2)
-
-        return self.adjacencyMatrix[node1][node2] != 0  
-
-    def hasConn(self, node1, node2):
-
-        return self.canTraverseDir(node1, node2) or self.canTraverseDir(node2, node1)
-
-    def addNode(self,node):
-
-        self.nodes.append(node)
-        node.index = len(self.nodes) - 1
-        for row in self.adjacencyMatrix:
-            row.append(0)     
-            self.adjacencyMatrix.append([0] * (len(self.adjacencyMatrix) + 1))
-
-    def getWeight(self, n1, n2):
-
-        node1, node2 = self.getIndexFromNode(n1), self.getIndexFromNode(n2)
-
-        return self.adjacencyMatrix[node1][node2]
-
-    def getIndexFromNode(self, node):
-
-        if not isinstance(node, Node) and not isinstance(node, int):
-
-            raise ValueError("node must be an integer or a Node object")
-
-        if isinstance(node, int):
-
-            return node
+            node_pairs = [[n1, n2], [n2, n1]]
 
         else:
 
-            return node.index
+            node_pairs = [[n1, n2]]
+
+        return node_pairs
+
+    def remove_edge(self, n1, n2, both_ends = True):
+
+        node_pairs = self.get_node_pairs(n1, n2, both_ends)
+
+        edges = self.edges[:]
+
+        for edge in edges:
+
+            if [edge.start, edge.end] in node_pairs:
+
+                self.edges.remove(edge)
+
+    def add_edge(self, n1, n2, cost, both_ends = True):
+
+        node_pairs = self.get_node_pairs(n1, n2, both_ends)
+
+        for edge in self.edges:
+
+            if [edge.start, edge.end] in node_pairs:
+
+                return ValueError('Edge {} {} already exists'.format(n1, n2))
+
+        self.edges.append(Edge(start = n1, end = n2, cost = cost))
+
+        if both_ends:
+
+            self.edges.append(Edge(start = n2, end = n1, cost = cost))
+
+    @property
+    def neighbours(self):
+
+        neighbours = {vertex: set() for vertex in self.vertices}
+
+        for edge in self.edges:
+
+            neighbours[edge.start].add((edge.end, edge.cost))
+
+        return neighbours
+
+    def dijkstra(self, source, dest):
+
+        assert source in self.vertices
+
+        distances = {vertex: inf for vertex in self.vertices}
+
+        previous_vertices = {vertex: None for vertex in self.vertices}
+
+        distances[source] = 0
+
+        vertices = self.vertices.copy()
+
+        while vertices:
+
+            current_vertex = min(vertices, key = lambda vertex: distances[vertex])
+
+            vertices.remove(current_vertex)
+
+            if distances[current_vertex] == inf:
+
+                break
+
+            for neighbour, cost in self.neighbours[current_vertex]:
+
+                alternative_route = distances[current_vertex] + cost
+
+                if alternative_route < distances[neighbour]:
+
+                    distances[neighbour] = alternative_route
+
+                    previous_vertices[neighbour] = current_vertex
+
+        path, current_vertex = deque(), dest
+
+        while previous_vertices[current_vertex] is not None:
+
+            path.appendleft(current_vertex)
+
+            current_vertex = previous_vertices[current_vertex]
             
-    def dijkstra(self, node):
+        if path:
 
-        nodenum = self.getIndexFromNode(node)
+            path.appendleft(current_vertex)
 
-        dist = [None] * len(self.nodes)
+        finalList = []
 
-        for i in range(len(dist)):
+        for i in path:
 
-            dist[i] = [float("inf")]
-            dist[i].append([self.nodes[nodenum]])
+            finalList.append(i)
         
-        dist[nodenum][0] = 0
+        return distances[dest], finalList
 
-        queue = [i for i in range(len(self.nodes))]
-
-        seen = set()
-
-        while len(queue) > 0:
-
-            minDist = float("inf")
-            minNode = None
-
-            for n in queue: 
-
-                if dist[n][0] < minDist and n not in seen:
-
-                    minDist = dist[n][0]
-                    minNode = n
-            
-            queue.remove(minNode)
-            seen.add(minNode)
-
-            connections = self.connectionsFrom(minNode)
-
-            for (node, weight) in connections: 
-
-                totDist = weight + minDist
-
-                if totDist < dist[node.index][0]:
-
-                    dist[node.index][0] = totDist
-                    dist[node.index][1] = list(dist[minNode][1])
-                    dist[node.index][1].append(node)
-
-        return dist
-
-a = Node("A")
-b = Node("B")
-c = Node("C")
-d = Node("D")
-e = Node("E")
-f = Node("F")
-
-graph = Graph.createFromNodes([a,b,c,d,e,f])
-
-graph.connect(a,b, 1)
-graph.connect(a,c, 2)
-graph.connect(a,e, 3)
-graph.connect(b,c, 4)
-graph.connect(b,d, 5)
-graph.connect(c,d, 6)
-graph.connect(c,f, 7)
-graph.connect(d,e, 8)
-
-print("")
-
-graph.printAdjencyMatrix()
-
-print("")
-
-print([(weight, [n.data for n in node]) for (weight, node) in graph.dijkstra(a)])
-
-print("")
+graph = Graph([("Paraíso", "Cartago", 7),("Cartago", "Tres Ríos", 12),("Tres Ríos", "Curridabat", 6),
+               ("Tres Ríos", "Sabanilla", 8),("Curridabat", "San Pedro", 4),("Sabanilla", "San Pedro", 3),
+               ("Sabanilla", "Guadalupe", 3),("Sabanilla", "San José", 8),("Guadalupe", "San Pedro", 2),
+               ("San José", "San Pedro", 4),("Tres Ríos", "Zapote", 10),("Zapote", 'San José', 6),
+               ("Guadalupe", "Moravia", 10),("Moravia", "Tibás", 12),("San José", "Tibás", 5),
+               ("Tibás", "Santo Domingo", 4),("Santo Domingo", "Heredia", 5)])
