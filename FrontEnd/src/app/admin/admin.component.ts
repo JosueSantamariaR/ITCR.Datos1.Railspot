@@ -10,6 +10,7 @@ export class AdminComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    document.body.classList.add('bg-admin');
   }
 
 }

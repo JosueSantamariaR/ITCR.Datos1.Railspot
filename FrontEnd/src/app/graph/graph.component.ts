@@ -18,7 +18,7 @@ export class GraphComponent implements OnInit {
 
   ngOnInit(): void {
 	const x= new Conexions();
-	
+	document.body.classList.add('bg-admin');
 	const list=x.getList();
 	const size=x.getSize();
     const Graph = dracula.Graph;
