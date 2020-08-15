@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_pymongo import PyMongo, ObjectId
+import Graph
 
 app= Flask(__name__)
 app.config['MONGO_URI']='mongodb://localhost/pythonreactdb'
@@ -9,16 +10,24 @@ mongo=PyMongo(app)
 
 CORS(app)
 db=mongo.db.users
+dt=mongo.db.tickets
 
-@app.route('/users', methods=['POST'])
-def createUser():
+@app.route('/users/<name>,<email>,<password>', methods=['POST'])
+def createUser(name, email, password):
     id=db.insert({
-        'name': request.json['name'],
-        'email': request.json['email'],
-        'password': request.json['password']
+        'name': name,
+        'email': email,
+        'password': password
     })
     return jsonify(str(ObjectId(id)))
 
+@app.route('/admin', methods=['POST'])
+def getAdmin():
+    requestBody=request.get_json()
+    check=False
+    if(db.find_one({'name':requestBody.get('username')}) and db.find_one({'password':requestBody.get('password')})):
+        check=True
+    return jsonify(check) 
 
 @app.route('/users/<id>', methods=['DELETE'])
 def deleteUsers(id):
@@ -36,6 +45,70 @@ def getUsers():
             'password':doc['password']
         })
     return jsonify(users)
+
+@app.route('/ticketsU/<point>', methods=['GET'])
+def getTicketsU(point):
+    ticketsList=[]
+    for doc in dt.find({'cedula':point}): 
+        ticketsList.append({
+            'cedula': doc['cedula'],
+            'start': doc['start'],
+            'end': doc['end'],
+            'date': doc['date'],
+            'route': doc['route']
+        })
+    return jsonify(ticketsList)
+
+@app.route('/ticketsR/<point>', methods=['GET'])
+def getTicketsR(point):
+    ticketsList=[]
+    for doc in dt.find({'route':point}): 
+        ticketsList.append({
+            'cedula': doc['cedula'],
+            'start': doc['start'],
+            'end': doc['end'],
+            'date': doc['date'],
+            'route': doc['route']
+        })
+    return jsonify(ticketsList)
+
+@app.route('/ticketsD/<point>', methods=['GET'])
+def getTicketsD(point):
+    ticketsList=[]
+    for doc in dt.find({'date':point}): 
+        ticketsList.append({
+            'cedula': doc['cedula'],
+            'start': doc['start'],
+            'end': doc['end'],
+            'date': doc['date'],
+            'route': doc['route']
+        })
+    return jsonify(ticketsList)
+
+@app.route('/ticketsActive/<point>,<point2>', methods=['GET'])
+def getTicketsActive(point, point2):
+    check=True
+    ticketsList=[]
+    for doc in dt.find({'start':point}): 
+        ticketsList.append({
+            'cedula': doc['cedula'],
+            'start': doc['start'],
+            'end': doc['end'],
+            'date': doc['date'],
+            'route': doc['route']
+        })
+    for doc in dt.find({'end':point2}): 
+        ticketsList.append({
+            'cedula': doc['cedula'],
+            'start': doc['start'],
+            'end': doc['end'],
+            'date': doc['date'],
+            'route': doc['route']
+        })
+    if(ticketsList==[]):
+        check=False
+    return jsonify(check)
+
 
 @app.route('/users/<id>', methods=['PUT'])
 def updateUser(id):
@@ -57,9 +130,9 @@ def getUser(id):
         'password':user['password']
         })
 
-"""
 
-@app.route('/allGraph')
+
+@app.route('/allGraph', methods=['GET'])
 def allGraph():
 
     edges = Graph.graph.edges
@@ -68,44 +141,65 @@ def allGraph():
 
     for i in range(0, len(edges)):
 
-        current = [edges[i].start,edges[i].end,edges[i].cost]
+        current = edges[i].start,edges[i].end,edges[i].cost
 
         newList.append(current)
 
     return jsonify(newList)
 
 
-@app.route('/dijkstra')
+@app.route('/dijkstra/', methods=['GET'])
 def dijkstra():
 
     start = request.args.get('start')
     end = request.args.get('end')
-
+    print("_________________----------------------------------________________________")
+    print(start, end)
+    print("_________________----------------------------------________________________")
     dijkstraList = Graph.graph.dijkstra(start,end)
+    if(dijkstraList[1]==[]):
+        dijkstraList = Graph.graph.dijkstra(end,start)
+    return jsonify({"cost": dijkstraList[0], "route": dijkstraList[1]})
 
-    return jsonify(dijkstraList)
+@app.route('/addEdge/<start>,<end>,<cost>', methods=['POST'])
+def addEdge(start, end, cost):
+    check=True
+    #start = request.args.get('start')
+    #end = request.args.get('end')
 
-@app.route('/addEdge')
-def addEdge():
+    Graph.graph.add_edge(start,end, cost)
 
-    start = request.args.get('start')
-    end = request.args.get('end')
+    return jsonify(check)
 
-    Graph.graph.add_edge(start,end)
+@app.route('/removeEdge/<start>,<end>', methods=['POST'])
+def removeEdge(start, end):
 
-    return None
-
-@app.route('/removeEdge')
-def removeEdge():
-
-    start = request.args.get('start')
-    end = request.args.get('end')
-
+    #start = request.args.get('start')
+    #end = request.args.get('end')
+    check=True
     Graph.graph.remove_edge(start,end)
 
-    return None
+    return jsonify(check)
 
-"""
+@app.route('/saveUserTicket/<ced>,<start>,<end>,<date>', methods=['POST'])
+def saveUsersTickets(ced,start,end,date):
+    #file=route.split(",")
+    #final=[]
+    #for i in file:
+        #final.append(i[1:-1])
+    id=dt.insert({
+        'cedula': ced,
+        'start': start,
+        'end': end,
+        'date': date,
+        
+
+        
+    })
+    return jsonify(str(ObjectId(id)))
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

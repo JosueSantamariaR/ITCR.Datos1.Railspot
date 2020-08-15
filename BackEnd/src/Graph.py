@@ -89,7 +89,7 @@ class Graph:
 
         for edge in self.edges:
 
-            neighbours[edge.start].add((edge.end))
+            neighbours[edge.start].add((edge.end, edge.cost))
 
         return neighbours
 
@@ -136,7 +136,7 @@ class Graph:
         if path:
 
             path.appendleft(current_vertex)
-
+        
         finalList = []
 
         for i in path:
@@ -144,7 +144,7 @@ class Graph:
             finalList.append(i)
         
         return distances[dest], finalList
-
+        
     def connections(self, node, dictionary):
 
         finalList = []
@@ -159,25 +159,24 @@ class Graph:
 
                 if node == k:
 
-                    finalList.append(j)       
+                    finalList.append(j)              
 
         return(finalList)
 
-graph = Graph.getInstance([("Paraíso", "Cartago", 7),
-                           ("Cartago", "Tres Ríos", 12),
-                           ("Tres Ríos", "Curridabat", 6),
-                           ("Tres Ríos", "Sabanilla", 8),
-                           ("Curridabat", "San Pedro", 4),
-                           ("Sabanilla", "San Pedro", 3),
+graph = Graph.getInstance([("Paraiso", "Cartago", 7),
+                           ("Cartago", "Tres_Rios", 12),
+                           ("Tres_Rios", "Curridabat", 6),
+                           ("Tres_Rios", "Sabanilla", 8),
+                           ("Curridabat", "San_Pedro", 4),
+                           ("Sabanilla", "San_Pedro", 3),
                            ("Sabanilla", "Guadalupe", 3),
-                           ("Sabanilla", "San José", 8),
-                           ("Guadalupe", "San Pedro", 2),
-                           ("San José", "San Pedro", 4),
-                           ("Tres Ríos", "Zapote", 10),
-                           ("Zapote", 'San José', 6),
+                           ("Sabanilla", "San_Jose", 8),
+                           ("Guadalupe", "San_Pedro", 2),
+                           ("San_Jose", "San_Pedro", 4),
+                           ("Tres_Rios", "Zapote", 10),
+                           ("Zapote", 'San_Jose', 6),
                            ("Guadalupe", "Moravia", 10),
-                           ("Moravia", "Tibás", 12),
-                           ("San José", "Tibás", 5),
-                           ("Tibás", "Santo Domingo", 4),
-                           ("Santo Domingo", "Heredia", 5)])
-                           
+                           ("Moravia", "Tibas", 12),
+                           ("San_Jose", "Tibas", 5),
+                           ("Tibas", "Santo_Domingo", 4),
+                           ("Santo_Domingo", "Heredia", 5)])
