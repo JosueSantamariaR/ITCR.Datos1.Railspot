@@ -1,5 +1,3 @@
-
-
     <div class="form-group align-items-center">
       <div class="col-auto my-2">
         <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
@@ -36,7 +34,7 @@
         </select>
         <div>   
         <label htmlFor="start">  Travel Date...         </label>
-        <input type="date" id="start" name="trip-start" defaultValue="2020-08-14" min="2018-01-01" max="2021-08-14" />
+        <input [(ngModel)]='date' type="date" id="start" name="trip-start" defaultValue="200820" min="200120" max="20210814" />
         </div>
         <div><input [(ngModel)]='userID' type="number" 
           name="userId" placeholder="UserID"min="8" max=""></div>
@@ -50,7 +48,10 @@
           <button (click)="getPrice()" type="submit" class="btn btn-primary">Consultar precio</button>
         </div>
         <div class="col-auto my-1">
-          <button (click)="getPrice()" type="submit" class="btn btn-primary">Comprar</button>
+          <button (click)="buyTickets()" type="submit" class="btn btn-primary">Comprar</button>
         </div>
+        <div> 
+          <label htmlFor="succes">{{success}}</label>
+          </div>
       </div>     
     </div>
