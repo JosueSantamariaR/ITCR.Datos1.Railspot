@@ -7,10 +7,12 @@ import { HomeComponent } from './home/home.component';
 import { GraphComponent } from './graph/graph.component';
 import { AdminComponent } from './admin/admin.component';
 import { TicketsComponent } from './tickets/tickets.component';
-import { ApiComponent } from './api/api.component';
+
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AdminPageComponent } from './admin-page/admin-page.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReservationsComponent } from './reservations/reservations.component';
 
 @NgModule({
   declarations: [
@@ -19,14 +21,15 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
     GraphComponent,
     AdminComponent,
     TicketsComponent,
-    ApiComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    ReservationsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

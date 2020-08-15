@@ -1,1 +1,62 @@
-<p>admin-page works!</p>
+<div class="fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Admin settings</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Routes <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/reservations" href="#" >Reservations</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="form-group align-items-center">
+    <div class="col-auto my-2">
+      <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+      <select [(ngModel)]='start' class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+          <option selected>Choose start point...</option>
+          <option value="Paraiso">Paraíso</option>
+          <option value="Cartago">Cartago</option>
+          <option value="Curridabat">Curridabat</option>
+          <option value="Heredia">Heredia</option>
+          <option value="Sabanilla">Sabanilla</option>
+          <option value="Zapote">Zapote</option>
+          <option value="San_Pedro">San Pedro</option>
+          <option value="San_Jose">San José</option>
+          <option value="Tres_Rios">Tres Ríos</option>
+          <option value="Guadalupe">Guadalupe</option>
+          <option value="Moravia">Moravia</option>
+          <option value="Tibas">Tibás</option>
+          <option value="Santo_Domingo">Santo Domingo</option>
+      </select>
+      <select [(ngModel)]='end' class="custom-select mr-sm-3" id="inlineFormCustomSelect">
+        <option value="Paraiso">Paraíso</option>
+        <option value="Cartago">Cartago</option>
+        <option value="Curridabat">Curridabat</option>
+        <option value="Tres_Rios">Tres Ríos</option>
+        <option value="Heredia">Heredia</option>
+        <option value="Sabanilla">Sabanilla</option>
+        <option value="Zapote">Zapote</option>
+        <option value="San_Pedro">San Pedro</option>
+        <option value="San_Jose">San José</option>
+        <option value="Guadalupe">Guadalupe</option>
+        <option value="Moravia">Moravia</option>
+        <option value="Tibas">Tibás</option>
+        <option value="Santo_Domingo">Santo Domingo</option>
+      </select>
+      <div>   
+      <div class="col-auto my-1">
+        <button  type="submit" class="btn btn-dark">Add new Route</button>
+      </div>
+      <div class="col-auto my-1">
+        <button  type="submit" class="btn btn-primary">Delete route</button>
+      </div>
+    </div>     
+  </div>
+  <router-outlet></router-outlet>

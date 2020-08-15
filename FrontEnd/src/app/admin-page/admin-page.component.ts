@@ -6,11 +6,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-page.component.css']
 })
 export class AdminPageComponent implements OnInit {
-
+  
   constructor() { }
-
+  
+  end:string;
+  start:string;
   ngOnInit(): void {
     //document.body.classList.add('bg-admin');
   }
+  addNewRoute(){
+
+  }
+  deleteRoute(){
+    
+  }
+ redirectR(){
+  
+ }
+    
+  
 
 }

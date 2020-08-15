@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as dracula from 'graphdracula';
 import { interval, Observable } from 'rxjs';
 import {Conexions} from '../graph/lista';
-import {ApiComponent} from '../api/api.component'
+
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import {Route} from '../graph/routes';
 
@@ -35,18 +35,18 @@ export class GraphComponent  {
 
     this.graph = new Graph();
     
-    this.graph.addNode('San José');
+    this.graph.addNode('San_Jose');
     this.graph.addNode('Cartago');
-    this.graph.addNode('Paraíso');
-    this.graph.addNode('Tres Ríos');
+    this.graph.addNode('Paraiso');
+    this.graph.addNode('Tres_Rios');
     this.graph.addNode('Curridabat'); 
     this.graph.addNode('Sabanilla');
     this.graph.addNode('Zapote');
-    this.graph.addNode('San Pedro');
+    this.graph.addNode('San_Pedro');
     this.graph.addNode('Guadalupe');
-    this.graph.addNode('Tibás');
+    this.graph.addNode('Tibas');
     this.graph.addNode('Moravia');
-    this.graph.addNode('Santo Domingo');
+    this.graph.addNode('Santo_Domingo');
     this.graph.addNode('Heredia');
     
     //Api consume

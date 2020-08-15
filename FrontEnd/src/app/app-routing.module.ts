@@ -5,7 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { GraphComponent } from './graph/graph.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { AdminComponent } from './admin/admin.component';
-import	{ApiComponent} from './api/api.component'
+import { ReservationsComponent } from './reservations/reservations.component';
 import	{AdminPageComponent} from './admin-page/admin-page.component'
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
   { path:'graph', component: GraphComponent },
   { path:'tickets', component: TicketsComponent },
   { path:'admin', component: AdminComponent },
-  {path:'api', component: ApiComponent},
+  {path: 'reservations', component: ReservationsComponent},
   {path: 'adminpage', component: AdminPageComponent}
 ];
 

@@ -1,40 +1,40 @@
 
-<form>
+
     <div class="form-group align-items-center">
       <div class="col-auto my-2">
         <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+        <select [(ngModel)]='start' class="custom-select mr-sm-2" id="inlineFormCustomSelect">
             <option selected>Choose start point...</option>
-            <option value="1">Paraiso</option>
-            <option value="2">Cartago</option>
-            <option value="4">Curridabat</option>
-            <option value="5">Heredia</option>
-            <option value="6">Sabanilla</option>
-            <option value="7">Zapote</option>
-            <option value="8">San Pedro</option>
-            <option value="9">San José</option>
-            <option value="10">Guadalupe</option>
-            <option value="11">Moravia</option>
-            <option value="12">Tibás</option>
-            <option value="13">Santo Domingo</option>
+            <option value="Paraiso">Paraíso</option>
+            <option value="Cartago">Cartago</option>
+            <option value="Curridabat">Curridabat</option>
+            <option value="Tres_Rios">Tres Ríos</option>
+            <option value="Heredia">Heredia</option>
+            <option value="Sabanilla">Sabanilla</option>
+            <option value="Zapote">Zapote</option>
+            <option value="San_Pedro">San Pedro</option>
+            <option value="San_Jose">San José</option>
+            <option value="Guadalupe">Guadalupe</option>
+            <option value="Moravia">Moravia</option>
+            <option value="Tibas">Tibás</option>
+            <option value="Santo_Domingo">Santo Domingo</option>
         </select>
-        <select class="custom-select mr-sm-3" id="inlineFormCustomSelect">
-            <option selected>Choose end point...</option>
-            <option value="1">Paraiso</option>
-            <option value="2">Cartago</option>
-            <option value="4">Curridabat</option>
-            <option value="5">Heredia</option>
-            <option value="6">Sabanilla</option>
-            <option value="7">Zapote</option>
-            <option value="8">San Pedro</option>
-            <option value="9">San José</option>
-            <option value="10">Guadalupe</option>
-            <option value="11">Moravia</option>
-            <option value="12">Tibás</option>
-            <option value="13">Santo Domingo</option>
+        <select [(ngModel)]='end' class="custom-select mr-sm-3" id="inlineFormCustomSelect">
+          <option value="Paraiso">Paraíso</option>
+          <option value="Cartago">Cartago</option>
+          <option value="Curridabat">Curridabat</option>
+          <option value="Heredia">Heredia</option>
+          <option value="Tres_Rios">Tres Ríos</option>
+          <option value="Sabanilla">Sabanilla</option>
+          <option value="Zapote">Zapote</option>
+          <option value="San_Pedro">San Pedro</option>
+          <option value="San_Jose">San José</option>
+          <option value="Guadalupe">Guadalupe</option>
+          <option value="Moravia">Moravia</option>
+          <option value="Tibas">Tibás</option>
+          <option value="Santo_Domingo">Santo Domingo</option>
         </select>
         <div>   
-          
         <label htmlFor="start">  Travel Date...         </label>
         <input type="date" id="start" name="trip-start" defaultValue="2020-08-14" min="2018-01-01" max="2021-08-14" />
         </div>
@@ -42,13 +42,15 @@
           name="userId" placeholder="UserID"min="8" max=""></div>
         <div><input [(ngModel)]='userdescount' type="number" 
           name="userDesc" placeholder="Tickets count"></div>
-        <label htmlFor="price">{{ngOnInit()}}</label>
+        <label htmlFor="price">El precio total es ₡{{total}}</label>
         <div> 
-        <label htmlFor="descount">{{descounT()}}</label>
+        <label htmlFor="descount">El descuento aplicado es {{desc-2}}%</label>
         </div>
         <div class="col-auto my-1">
-          <button (click)="getPrice()" type="submit" class="btn btn-primary">Submit</button>
+          <button (click)="getPrice()" type="submit" class="btn btn-primary">Consultar precio</button>
+        </div>
+        <div class="col-auto my-1">
+          <button (click)="getPrice()" type="submit" class="btn btn-primary">Comprar</button>
         </div>
       </div>     
     </div>
-  </form>
