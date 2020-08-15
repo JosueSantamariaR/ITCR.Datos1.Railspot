@@ -7,7 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { GraphComponent } from './graph/graph.component';
 import { AdminComponent } from './admin/admin.component';
 import { TicketsComponent } from './tickets/tickets.component';
-
+import {ScrollingModule} from '@angular/cdk/scrolling';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AdminPageComponent } from './admin-page/admin-page.component';
@@ -29,7 +29,8 @@ import { ReservationsComponent } from './reservations/reservations.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    ScrollingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

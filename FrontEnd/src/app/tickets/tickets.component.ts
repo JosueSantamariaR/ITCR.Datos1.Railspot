@@ -52,11 +52,10 @@ export class TicketsComponent {
       { 
       this.httpClient.post(`http://localhost:5000/saveUserTicket/${this.userID},${this.start},${this.end},${this.date}`,{}).subscribe((data)=>{
         this.request=data as JSON;
-        this.date=null;
         this.success="Exitoso";
-        console.log(this.date);
       });
-  }}
+  }
+}
 
   
 }

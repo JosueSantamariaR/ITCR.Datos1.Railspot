@@ -36,6 +36,7 @@
           <option value="Santo_Domingo">Santo Domingo</option>
       </select>
       <select [(ngModel)]='end' class="custom-select mr-sm-3" id="inlineFormCustomSelect">
+        <option selected>Choose end point...</option>
         <option value="Paraiso">Paraíso</option>
         <option value="Cartago">Cartago</option>
         <option value="Curridabat">Curridabat</option>
@@ -50,13 +51,19 @@
         <option value="Tibas">Tibás</option>
         <option value="Santo_Domingo">Santo Domingo</option>
       </select>
-      <div>   
+      <div>  
+        <div>
+          <input [(ngModel)]='cost' type="text" placeholder="Kilometers" /><br />
+        </div> 
       <div class="col-auto my-1">
-        <button  type="submit" class="btn btn-dark">Add new Route</button>
+        <button (click)="addNewRoute()" type="submit" class="btn btn-dark">Add new Route</button>
       </div>
       <div class="col-auto my-1">
-        <button  type="submit" class="btn btn-primary">Delete route</button>
+        <button (click)="deleteRoute()" type="submit" class="btn btn-primary">Delete route</button>
       </div>
+      <div> 
+        <label htmlFor="succes">{{success}}</label>
+        </div>
     </div>     
   </div>
   <router-outlet></router-outlet>
