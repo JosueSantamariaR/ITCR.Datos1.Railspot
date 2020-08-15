@@ -8,15 +8,30 @@ def make_edge(start, end, cost):
 
 class Graph:
 
+    instance = None
+    
     def __init__(self, edges):
+
+        if Graph.instance == None:
+
+            Graph.instance = self
         
-        wrong_edges = [i for i in edges if len(i) not in [2, 3]]
+            wrong_edges = [i for i in edges if len(i) not in [2, 3]]
 
-        if wrong_edges:
+            if wrong_edges:
 
-            raise ValueError('Wrong edges data: {}'.format(wrong_edges))
+                raise ValueError('Wrong edges data: {}'.format(wrong_edges))
 
-        self.edges = [make_edge(*edge) for edge in edges]
+            self.edges = [make_edge(*edge) for edge in edges]
+
+    @staticmethod
+    def getInstance(edges):
+        
+        if Graph.instance == None:
+
+            Graph(edges)
+
+        return Graph.instance
 
     @property
     def vertices(self):
@@ -74,7 +89,7 @@ class Graph:
 
         for edge in self.edges:
 
-            neighbours[edge.start].add((edge.end, edge.cost))
+            neighbours[edge.start].add((edge.end))
 
         return neighbours
 
@@ -130,9 +145,39 @@ class Graph:
         
         return distances[dest], finalList
 
-graph = Graph([("Paraíso", "Cartago", 7),("Cartago", "Tres Ríos", 12),("Tres Ríos", "Curridabat", 6),
-               ("Tres Ríos", "Sabanilla", 8),("Curridabat", "San Pedro", 4),("Sabanilla", "San Pedro", 3),
-               ("Sabanilla", "Guadalupe", 3),("Sabanilla", "San José", 8),("Guadalupe", "San Pedro", 2),
-               ("San José", "San Pedro", 4),("Tres Ríos", "Zapote", 10),("Zapote", 'San José', 6),
-               ("Guadalupe", "Moravia", 10),("Moravia", "Tibás", 12),("San José", "Tibás", 5),
-               ("Tibás", "Santo Domingo", 4),("Santo Domingo", "Heredia", 5)])
+    def connections(self, node, dictionary):
+
+        finalList = []
+
+        for i in dictionary[node]:
+
+            finalList.append(i)
+
+        for j in dictionary:
+            
+            for k in dictionary[j]:
+
+                if node == k:
+
+                    finalList.append(j)       
+
+        return(finalList)
+
+graph = Graph.getInstance([("Paraíso", "Cartago", 7),
+                           ("Cartago", "Tres Ríos", 12),
+                           ("Tres Ríos", "Curridabat", 6),
+                           ("Tres Ríos", "Sabanilla", 8),
+                           ("Curridabat", "San Pedro", 4),
+                           ("Sabanilla", "San Pedro", 3),
+                           ("Sabanilla", "Guadalupe", 3),
+                           ("Sabanilla", "San José", 8),
+                           ("Guadalupe", "San Pedro", 2),
+                           ("San José", "San Pedro", 4),
+                           ("Tres Ríos", "Zapote", 10),
+                           ("Zapote", 'San José', 6),
+                           ("Guadalupe", "Moravia", 10),
+                           ("Moravia", "Tibás", 12),
+                           ("San José", "Tibás", 5),
+                           ("Tibás", "Santo Domingo", 4),
+                           ("Santo Domingo", "Heredia", 5)])
+                           
