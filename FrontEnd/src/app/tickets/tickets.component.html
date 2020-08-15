@@ -1,6 +1,7 @@
+
 <form>
-    <div class="form-row align-items-center">
-      <div class="col-auto my-1">
+    <div class="form-group align-items-center">
+      <div class="col-auto my-2">
         <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
         <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
             <option selected>Choose start point...</option>
@@ -32,19 +33,22 @@
             <option value="12">Tibás</option>
             <option value="13">Santo Domingo</option>
         </select>
-        <div>
-        <label htmlFor="start"></label>
+        <div>   
+          
+        <label htmlFor="start">  Travel Date...         </label>
         <input type="date" id="start" name="trip-start" defaultValue="2020-08-14" min="2018-01-01" max="2021-08-14" />
         </div>
-        <label htmlFor="price">Price = 20$</label>
+        <div><input [(ngModel)]='userID' type="number" 
+          name="userId" placeholder="UserID"min="8" max=""></div>
+        <div><input [(ngModel)]='userdescount' type="number" 
+          name="userDesc" placeholder="Tickets count"></div>
+        <label htmlFor="price">{{ngOnInit()}}</label>
         <div> 
-        <label htmlFor="descount">Descount = 2%</label>
+        <label htmlFor="descount">{{descounT()}}</label>
         </div>
-      </div>
-      <div class="col-auto my-1">
-      </div>
-      <div class="col-auto my-1">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
+        <div class="col-auto my-1">
+          <button (click)="getPrice()" type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>     
     </div>
   </form>

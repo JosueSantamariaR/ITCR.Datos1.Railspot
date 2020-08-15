@@ -5,9 +5,11 @@
     <div>Rail<span>spot admins login</span></div>
     </div>
     <br />
-    <div className="login">
-    <input type="text" placeholder="username" name="user" /><br />
-    <input type="password" placeholder="password" name="password" /><br />
-    <input type="button" defaultValue="Login" />
+    <div class="col-auto my-1" className="login">
+        <input type="text" placeholder="username" name="user" /><br />
+        <input type="password" placeholder="password" name="password" /><br />
+    </div>
+    <div class="col-auto my-3">
+        <button (click)="getAuthetication()" type="submit" class="btn btn-primary">Login</button>
     </div>
 </div>

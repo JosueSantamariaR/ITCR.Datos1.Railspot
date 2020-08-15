@@ -6,13 +6,15 @@ import { GraphComponent } from './graph/graph.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { AdminComponent } from './admin/admin.component';
 import	{ApiComponent} from './api/api.component'
+import	{AdminPageComponent} from './admin-page/admin-page.component'
 
 const routes: Routes = [
   { path:'', component: HomeComponent },
   { path:'graph', component: GraphComponent },
   { path:'tickets', component: TicketsComponent },
   { path:'admin', component: AdminComponent },
-  {path:'api', component: ApiComponent}
+  {path:'api', component: ApiComponent},
+  {path: 'adminpage', component: AdminPageComponent}
 ];
 
 @NgModule({
